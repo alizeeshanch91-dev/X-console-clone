@@ -1,5 +1,13 @@
 #include"User.h"
 
+user::user()
+{
+	username = "";
+	password = "";
+	followingCapacity = 4;
+	following = new int[followingCapacity];
+	followingCount = 0;
+}
 user::user(string username, string password)
 {
 	this->username = username;
