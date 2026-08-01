@@ -12,6 +12,7 @@ private:
 	int followingCapacity;
 	void resizeFollowing();
 public:
+	user();
 	user(string username, string password);
 	user(const user& other);
 	~user();
