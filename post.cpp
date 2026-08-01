@@ -22,6 +22,18 @@ void Post::resizeComments()
 	delete[] comments;
 	comments = temp;
 }
+Post::Post()
+{
+	authorIndex = -1;
+	content = "";
+	views = 0;
+	likedByCount = 0;
+	likedByCapacity = 10;
+	likedBy = new int[likedByCapacity];
+	commentCounts = 0;
+	commentCapacity = 10;
+	comments = new string[commentCapacity];
+}
 Post::Post(int authorIndex, string content)
 {
 	views = 0;
