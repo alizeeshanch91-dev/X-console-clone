@@ -20,6 +20,7 @@ private:
 	int commentCapacity;
 	void resizeComments();
 public:
+	post();
 	Post(int authorIndex, string content);
 	~Post();
 	Post(const Post& other);
