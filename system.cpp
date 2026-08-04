@@ -98,3 +98,69 @@ bool System::createPost(const string& content)
 	postsCount++;
 	return true;
 }
+bool System::followUser(const string& targetUsername)
+{
+	if (!isLoggedIn())
+	{
+		return false;
+	}
+	int idx = findUserIndex(targetUsername);
+	if (idx == -1)
+	{
+		return false;
+	}
+	if (idx == currentUserIndex)
+	{
+		return false;
+	}
+	users[currentUserIndex].follow(idx);
+	return true;
+}
+bool System::unfollowUser(const string& targetUsername)
+{
+	if (!isLoggedIn())
+	{
+		return false;
+	}
+	int idx = findUserIndex(targetUsername);
+	if (idx == -1)
+	{
+		return false;
+	}
+	if (idx == currentUserIndex)
+	{
+		return false;
+	}
+	users[currentUserIndex].unfollow(idx);
+	return true;
+}
+// getters
+int System::getPostCount() const
+{
+	return postsCount;
+}
+string System::getPostContent(int index) const
+{
+	return posts[index].getContent();
+}
+string System::getPostAuthorUsername(int index) const
+{
+	int authorIdx = posts[index].getAuthorIndex();
+	return users[authorIdx].getUsername();
+}
+int System::getPostLikeCount(int index) const
+{
+	return posts[index].getLikeCount();
+}
+int System::getPostViews(int index) const
+{
+	return posts[index].getViews();
+}
+int System::getPostCommentCount(int index) const
+{
+	return posts[index].getCommentCount();
+}
+string System::getCurrentUsername() const
+{
+	return users[currentUserIndex].getUsername();
+}
