@@ -28,4 +28,14 @@ public:
 	void logOut();
 	bool isLoggedIn() const;
 	bool createPost(const string& content);
+	bool followUser(const string& targetUsername);
+	bool unfollowUser(const string& targetUsername);
+	// getters
+	int getPostCount() const;
+	string getPostContent(int index) const;
+	string getPostAuthorUsername(int index) const;
+	int getPostLikeCount(int index) const;
+	int getPostViews(int index) const;
+	int getPostCommentCount(int index) const;
+	string getCurrentUsername() const;
 };
