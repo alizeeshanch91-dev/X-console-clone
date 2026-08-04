@@ -53,6 +53,7 @@ Post::~Post()
 }
 Post::Post(const Post& other)
 {
+	authorIndex = other.authorIndex;
 	content = other.content;
 	commentCounts = other.commentCounts;
 	commentCapacity = other.commentCapacity;
@@ -78,6 +79,7 @@ Post& Post::operator=(const Post& other)
 	}
 	delete[] comments;
 	delete[] likedBy;
+	authorIndex = other.authorIndex;
 	content = other.content;
 	commentCounts = other.commentCounts;
 	commentCapacity = other.commentCapacity;
