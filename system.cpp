@@ -164,3 +164,42 @@ string System::getCurrentUsername() const
 {
 	return users[currentUserIndex].getUsername();
 }
+// features
+bool System::likePost(int index)
+{
+	if (!isLoggedIn())
+	{
+		return false;
+	}
+	if (index < 0 || index >= postsCount)
+	{
+		return false;
+	}
+	posts[index].like(currentUserIndex);
+	return true;
+}
+bool System::commentOnPost(int index, const string& commentText)
+{
+	if (!isLoggedIn())
+	{
+		return false;
+	}
+	if (index < 0 || index >= postsCount)
+	{
+		return false;
+	}
+	posts[index].addComment(commentText);
+	return true;
+}
+void System::viewPost(int index)
+{
+	if (index < 0 || index >= postsCount)
+	{
+		return;
+	}
+	posts[index].addView(currentUserIndex);
+}
+string System::getPostComment(int postIndex, int commentIndex) const
+{
+	return posts[postIndex].getComment(commentIndex);
+}
