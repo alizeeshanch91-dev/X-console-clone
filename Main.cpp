@@ -41,6 +41,17 @@ void displayPost(const System& sys, int index)
 	printLine();
 }
 
+void displayPostSummary(const System& sys, int index)
+{
+	string content = sys.getPostContent(index);
+	string preview = content.substr(0, 40);
+	if (content.length() > 40)
+	{
+		preview += "...";
+	}
+	cout << "[" << index << "] @" << sys.getPostAuthorUsername(index) << ": " << preview << "\n";
+}
+
 void handleSignUp(System& sys)
 {
 	string username, password;
@@ -94,19 +105,99 @@ void handleCreatePost(System& sys)
 	}
 }
 
+void handlePostDetails(System& sys, int index)
+{
+	sys.viewPost(index);
+
+	bool viewingPost = true;
+	while (viewingPost)
+	{
+		system("cls");
+		displayPost(sys, index);
+		cout << "1. Like\n";
+		cout << "2. Comment\n";
+		cout << "0. Back\n";
+		printLine();
+		cout << "Choice: ";
+
+		int choice;
+		cin >> choice;
+		cin.ignore();
+
+		if (choice == 1)
+		{
+			if (sys.likePost(index))
+			{
+				cout << "Liked!\n";
+			}
+			else
+			{
+				cout << "Could not like this post.\n";
+			}
+			system("pause");
+		}
+		else if (choice == 2)
+		{
+			string commentText;
+			cout << "Your comment: ";
+			getline(cin, commentText);
+
+			if (sys.commentOnPost(index, commentText))
+			{
+				cout << "Comment added!\n";
+			}
+			else
+			{
+				cout << "Could not add comment.\n";
+			}
+			system("pause");
+		}
+		else if (choice == 0)
+		{
+			viewingPost = false;
+		}
+	}
+}
+
 void handleViewAllPosts(System& sys)
 {
-	int count = sys.getPostCount();
-	if (count == 0)
+	bool browsing = true;
+	while (browsing)
 	{
-		cout << "No posts yet.\n";
-		return;
-	}
+		system("cls");
+		int count = sys.getPostCount();
+		if (count == 0)
+		{
+			cout << "No posts yet.\n";
+			system("pause");
+			return;
+		}
 
-	printLine();
-	for (int i = count - 1; i >= 0; i--)
-	{
-		displayPost(sys, i);
+		printLine();
+		for (int i = count - 1; i >= 0; i--)
+		{
+			displayPostSummary(sys, i);
+		}
+		printLine();
+		cout << "Enter a post number to view details, or -1 to go back: ";
+
+		int choice;
+		cin >> choice;
+		cin.ignore();
+
+		if (choice == -1)
+		{
+			browsing = false;
+		}
+		else if (choice < 0 || choice >= count)
+		{
+			cout << "Invalid post number.\n";
+			system("pause");
+		}
+		else
+		{
+			handlePostDetails(sys, choice);
+		}
 	}
 }
 
@@ -141,6 +232,7 @@ void handleUnfollow(System& sys)
 		cout << "Could not unfollow that user.\n";
 	}
 }
+
 int main()
 {
 	System sys;
@@ -189,9 +281,7 @@ int main()
 			}
 			else if (choice == 2)
 			{
-				system("cls");
 				handleViewAllPosts(sys);
-				system("pause");
 			}
 			else if (choice == 3)
 			{
