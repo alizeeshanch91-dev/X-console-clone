@@ -39,7 +39,6 @@ user& user::operator=(const user& other)
 	password = other.password;
 	followingCount = other.followingCount;
 	followingCapacity = other.followingCapacity;
-
 	following = new int[followingCapacity];
 	for (int i = 0; i < followingCount; i++)
 	{
