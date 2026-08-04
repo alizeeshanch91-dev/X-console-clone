@@ -38,6 +38,16 @@ void displayPost(const System& sys, int index)
 	cout << "Likes: " << sys.getPostLikeCount(index)
 		<< "  Views: " << sys.getPostViews(index)
 		<< "  Comments: " << sys.getPostCommentCount(index) << "\n";
+
+	int commentCount = sys.getPostCommentCount(index);
+	if (commentCount > 0)
+	{
+		cout << "--- Comments ---\n";
+		for (int i = 0; i < commentCount; i++)
+		{
+			cout << "- " << sys.getPostComment(index, i) << "\n";
+		}
+	}
 	printLine();
 }
 
